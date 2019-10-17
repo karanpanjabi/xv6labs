@@ -343,6 +343,8 @@ scheduler(void)
       switchuvm(p);
       p->state = RUNNING;
 
+      p->priority = 10;
+
       swtch(&(c->scheduler), p->context);
       switchkvm();
 
@@ -549,7 +551,7 @@ cps(void)
   for(p = ptable.proc; p < &ptable.proc[NPROC]; p++){
     if(p->state == UNUSED)
       continue;
-    cprintf("(%d, %s, %s)\n", p->pid, p->name, states[p->state]);
+    cprintf("(%d, %s, %s, %d)\n", p->pid, p->name, states[p->state], p->priority);
   }
 
   return 0;
